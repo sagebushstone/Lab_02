@@ -16,7 +16,7 @@ public class PersonGenerator {
         int birthYear = 0;
         ArrayList<String> userList = new ArrayList<>();
         Scanner in = new Scanner(System.in);
-        boolean allUsers = true;
+        boolean moreUsers = true;
 
         File workingDirectory = new File(System.getProperty("user.dir"));
         Path file = Paths.get(workingDirectory.getPath() + "\\src\\PersonTestData.txt");
@@ -27,13 +27,13 @@ public class PersonGenerator {
             lastName = SafeInput.getNonZeroLenString(in, "Enter the Last Name");
             title = SafeInput.getNonZeroLenString(in, "Enter the Title");
             birthYear = SafeInput.getRangedInt(in, "Enter the Year of Birth", 1000, 9999);
-            allUsers = SafeInput.getYNConfirm(in, "Do you wish to enter another user?");
+            moreUsers = SafeInput.getYNConfirm(in, "Do you wish to enter another user?");
 
             String concatRecord = userId + ", " + firstName + ", " + lastName + ", " +
                     title + ", " + birthYear;
 
             userList.add(concatRecord);
-        } while (allUsers);
+        } while (moreUsers);
 
         for(int i=0; i<userList.size(); i++){
             System.out.println(userList.get(i));
