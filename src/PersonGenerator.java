@@ -9,7 +9,10 @@ import static java.nio.file.StandardOpenOption.CREATE;
 
 public class PersonGenerator {
     public static void main(String[] args){
-        String userId = "";
+        Person boy = new Person("000001", "Bill", "Bailey", "Dr.", 2000);
+        System.out.println(boy.toString());
+    }
+        /*String userId = "";
         String firstName = "";
         String lastName = "";
         String title = "";
@@ -66,6 +69,6 @@ public class PersonGenerator {
             e.printStackTrace();
         }
 
-    }
+    }*/
 }
 
