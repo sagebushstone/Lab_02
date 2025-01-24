@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Product {
     String name;
     String description;
@@ -113,5 +115,16 @@ public class Product {
                 ", ID='" + ID + '\'' +
                 ", cost=" + cost +
                 '}';
+    }
+
+    /**
+     * @param o - the object to compare to
+     * @return true/false if the object equals the parameter
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Double.compare(cost, product.cost) == 0 && Objects.equals(name, product.name) && Objects.equals(description, product.description) && Objects.equals(ID, product.ID);
     }
 }

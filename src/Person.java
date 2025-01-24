@@ -159,4 +159,16 @@ public class Person {
                 ", yob=" + yob +
                 '}';
     }
+
+    /**
+     * @param o - the object to compare to
+     * @return true/false if the object equals the parameter
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return yob == person.yob && Objects.equals(id, person.id) && Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName) && Objects.equals(title, person.title);
+    }
+
 }
