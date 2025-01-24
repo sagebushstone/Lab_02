@@ -146,6 +146,9 @@ public class Person {
         return "" + age;
     }
 
+    /**
+     * @return - the object in String format
+     */
     @Override
     public String toString() {
         return "Person{" +
@@ -156,16 +159,4 @@ public class Person {
                 ", yob=" + yob +
                 '}';
     }
-
-    /*@Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Person person = (Person) o;
-        return yob == person.yob && Objects.equals(id, person.id) && Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName) && Objects.equals(title, person.title);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstName, lastName, title, yob);
-    }*/
 }

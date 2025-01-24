@@ -1,5 +1,3 @@
-//import static jdk.javadoc.internal.doclets.formats.html.markup.HtmlStyle.title;
-
 public class Product {
     String name;
     String description;
@@ -24,6 +22,9 @@ public class Product {
         return name;
     }
 
+    /**
+     * @param name - the new name for the Product
+     */
     public void setName(String name) {
         this.name = name;
     }
@@ -35,6 +36,9 @@ public class Product {
         return description;
     }
 
+    /**
+     * @param description - the new description for the Product
+     */
     public void setDescription(String description) {
         this.description = description;
     }
@@ -46,6 +50,9 @@ public class Product {
         return ID;
     }
 
+    /**
+     * @param ID - the new ID for the Product
+     */
     public void setID(String ID){
         this.ID = ID;
     }
@@ -57,6 +64,9 @@ public class Product {
         return cost;
     }
 
+    /**
+     * @param cost - the new cost for the Product
+     */
     public void setCost(double cost) {
         this.cost = cost;
     }
@@ -92,6 +102,9 @@ public class Product {
                 "<cost>" + cost + "</cost>" + "</Product>";
     }
 
+    /**
+     * @return the object in String format
+     */
     @Override
     public String toString() {
         return "Product{" +

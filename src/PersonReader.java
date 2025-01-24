@@ -16,27 +16,10 @@ public class PersonReader {
         String rec = "";
         ArrayList<String> lines = new ArrayList<>();
 
-        /*
-
-        Here is the data file we are reading:
-        000001, Bilbo, Baggins, Esq., 1060
-        000002, Frodo, Baggins, Esq., 1120
-        000003, Samwise, Gamgee, Esq., 1125
-        000004, Peregrin, Took, Esq., 1126
-        000005, Meridoc, Brandybuck, Esq., 1126
-
-        */
-
         final int FIELDS_LENGTH = 5;
-
-        String id, firstName, lastName, title;
-        int yob;
 
         try
         {
-
-            // use the toolkit to get the current working directory of the IDE
-            // Not sure if the toolkit is thread safe...
             File workingDirectory = new File(System.getProperty("user.dir"));
 
             chooser.setCurrentDirectory(workingDirectory);
@@ -45,63 +28,53 @@ public class PersonReader {
             {
                 selectedFile = chooser.getSelectedFile();
                 Path file = selectedFile.toPath();
-                // Typical java pattern of inherited classes
-                // we wrap a BufferedWriter around a lower level BufferedOutputStream
+
+                String fileName = selectedFile.getName();
+                String fileExtension = "";
+                if(fileName.lastIndexOf(".") > 0)
+                    fileExtension = fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase();
+                System.out.println(fileExtension);
+
                 InputStream in =
                         new BufferedInputStream(Files.newInputStream(file, CREATE));
                 BufferedReader reader =
                         new BufferedReader(new InputStreamReader(in));
 
-                // Finally we can read the file LOL!
-                int line = 0;  // if we want to keep track of the line numbers
+                // Reads each line of the file individually
+                int line = 0;
                 while(reader.ready())
                 {
                     rec = reader.readLine();
-                    lines.add(rec);  // read all the lines into memory in an array list
+                    lines.add(rec);
                     line++;
-                    // echo to screen
                     System.out.printf("\nLine %4d %-60s ", line, rec);
                 }
-                reader.close(); // must close the file to seal it and flush buffer
+                reader.close();
                 System.out.println("\n\nData file read!");
 
-                // Now process the lines in the arrayList
-                // Split the line into the fields by using split with a comma
-                // use trim to remove leading and trailing spaces
-                // Numbers need to be converted back to numberic values. Here only
-                // the last field year of birth yob is an int the rest are strings.
+                // Outputs the formatted values of the Person
+                    String[] fields;
+                    for(String l:lines) {
+                        fields = l.split(",");
 
-                String[] fields;
-                for(String l:lines)
-                {
-                    fields = l.split(","); // Split the record into the fields
+                        if (fields.length == FIELDS_LENGTH) {
+                            Person pers = new Person(fields[0].trim(), fields[1].trim(), fields[2].trim(),
+                                    fields[3].trim(), Integer.parseInt(fields[4].trim()));
 
-                    if(fields.length == FIELDS_LENGTH)
-                    {
-                        Person pers = new Person();
-                        pers.setId(fields[0].trim());
-                        pers.setFirstName(fields[1].trim());
-                        pers.setLastName(fields[2].trim());
-                        pers.setTitle(fields[3].trim());
-                        pers.setYob(Integer.parseInt(fields[4].trim()));
-
-                        System.out.printf("\n%-8s%-25s%-25s%-6s%6d", pers.getId(), pers.getFirstName(), pers.getLastName(), pers.getTitle(), pers.getYob());
-                    }
-                    else
-                    {
-                        System.out.println("Found a record that may be corrupt: ");
-                        System.out.println(l);
+                            System.out.printf("\n%-8s%-25s%-25s%-6s%6d", pers.getId(), pers.getFirstName(), pers.getLastName(), pers.getTitle(), pers.getYob());
+                        } else {
+                            System.out.println("Found a record that may be corrupt: ");
+                            System.out.println(l);
+                        }
                     }
                 }
-
-            }
-            else  // user closed the file dialog wihtout choosing
+            else
             {
                 System.out.println("Failed to choose a file to process");
                 System.out.println("Run the program again!");
                 System.exit(0);
             }
-        }  // end of TRY
+        }
         catch (FileNotFoundException e)
         {
             System.out.println("File not found!!!");

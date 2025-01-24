@@ -1,5 +1,5 @@
 public class ObjInputTest {
-    public static void main(String args[]){
+    public static void main(String args[]) {
         SafeInputObj sio = new SafeInputObj();
 
         String nonZeroString = sio.getNonZeroLenString("Enter a non zero length string");
@@ -16,6 +16,5 @@ public class ObjInputTest {
         System.out.println(getYN);
         String getRegex = sio.getRegExString("Enter regex", "hi*");
         System.out.println(getRegex);
-
     }
 }

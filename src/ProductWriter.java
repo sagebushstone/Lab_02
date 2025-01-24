@@ -3,7 +3,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import static java.nio.file.StandardOpenOption.CREATE;
 
@@ -18,7 +17,6 @@ public class ProductWriter {
         Path file = Paths.get(workingDirectory.getPath() + "\\src\\ProductTestData.csv");
         Path fileJSON = Paths.get(workingDirectory.getPath() + "\\src\\ProductTestData.json");
         Path fileXML = Paths.get(workingDirectory.getPath() + "\\src\\ProductTestData.xml");
-
 
         do {
             Product prod = new Product();
