@@ -17,6 +17,9 @@ public class Product {
         this.cost = cost;
     }
 
+    /**
+     * @return - the name of the Product
+     */
     public String getName() {
         return name;
     }
@@ -25,6 +28,9 @@ public class Product {
         this.name = name;
     }
 
+    /**
+     * @return - the description of the Product
+     */
     public String getDescription() {
         return description;
     }
@@ -33,6 +39,9 @@ public class Product {
         this.description = description;
     }
 
+    /**
+     * @return - the ID of the Product
+     */
     public String getID() {
         return ID;
     }
@@ -41,6 +50,9 @@ public class Product {
         this.ID = ID;
     }
 
+    /**
+     * @return - the cost of the Product
+     */
     public double getCost() {
         return cost;
     }
@@ -49,10 +61,16 @@ public class Product {
         this.cost = cost;
     }
 
+    /**
+     * @return - the Product in CSV format
+     */
     public String toCSV(){
         return ID + ", " + name + ", " + description + ", " + cost;
     }
 
+    /**
+     * @return - the Product in JSON format
+     */
     public String toJSON(){
         String Q = "\"";
         String QCM = "\", ";
@@ -63,6 +81,9 @@ public class Product {
                 + Q + "cost" + Q + ": " + cost  + "}";
     }
 
+    /**
+     * @return - the Product in XML format
+     */
     public String toXML(){
         return "<Product>" +
                 "<ID>" + ID + "</ID>" +

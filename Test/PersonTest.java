@@ -1,14 +1,12 @@
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
+import java.util.Calendar;
+
+import java.util.Calendar;
 
 import static org.junit.jupiter.api.Assertions.*;
 public class PersonTest {
     Person p1 = new Person("000001", "Sage", "Bushstone", "Ms.", 2005);
-
-    /*@BeforeEach
-    void setUp() {
-        p1 = ;
-    }*/
 
     @Test
     public void setId() {
@@ -79,4 +77,15 @@ public class PersonTest {
         assertEquals(expected, p1.toXML());
     }
 
+
+    @Test
+    public void getAge() {
+        int age = Calendar.getInstance().get(Calendar.YEAR) - 2005;
+        assertEquals(Integer.toString(age), p1.getAge());
+    }
+
+    @Test
+    public void getAgeWithInput() {
+        assertEquals("5", p1.getAge(2010));
+    }
 }

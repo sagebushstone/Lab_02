@@ -5,6 +5,9 @@ public class SafeInputObj {
     public SafeInputObj (Scanner pipe){
         this.pipe = pipe;
     }
+    public SafeInputObj(){
+        this.pipe = new Scanner(System.in);
+    }
 
     /**
      * Get a String which contains at least one character

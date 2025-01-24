@@ -20,22 +20,37 @@ public class Person {
         this.yob = yob;
     }
 
+    /**
+     * @return - the id of the Person
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * @param id - what the ID should be set to for the Person
+     */
     public void setId(String id) {
         this.id = id;
     }
 
+    /**
+     * @return - the first name of the Person
+     */
     public String getFirstName() {
         return firstName;
     }
 
+    /**
+     * @param firstName - what the firstName should be set to for the Person
+     */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
+    /**
+     * @return - the last name of the Person
+     */
     public String getLastName() {
         return lastName;
     }
@@ -44,6 +59,9 @@ public class Person {
         this.lastName = lastName;
     }
 
+    /**
+     * @return - the title of the Person
+     */
     public String getTitle() {
         return title;
     }
@@ -52,6 +70,9 @@ public class Person {
         this.title = title;
     }
 
+    /**
+     * @return - the birth year of the Person
+     */
     public int getYob() {
         return yob;
     }
@@ -60,18 +81,30 @@ public class Person {
         this.yob = yob;
     }
 
+    /**
+     * @return - the full name, first and last, of the Person
+     */
     public String getFullName(){
         return firstName + " " + lastName;
     }
 
+    /**
+     * @return - the formal name of the Person, including title
+     */
     public String formalName(){
         return title + " " + getFullName();
     }
 
+    /**
+     * @return - the Person object in CSV format
+     */
     public String toCSV(){
         return id + ", " + firstName + ", " + lastName + ", " + title + ", " + yob;
     }
 
+    /**
+     * @return - the Person object in JSON format
+     */
     public String toJSON(){
         String Q = "\"";
         String QCM = "\", ";
@@ -83,6 +116,9 @@ public class Person {
                 + Q + "yob" + Q + ": " + yob  + "}";
     }
 
+    /**
+     * @return - the Person object in XML format
+     */
     public String toXML(){
         return "<Person>" +
                 "<ID>" + id + "</ID>" +
@@ -93,12 +129,18 @@ public class Person {
     }
 
 
+    /**
+     * @return the age of the Person based on the current year
+     */
     public String getAge() {
         int age = Calendar.getInstance().get(Calendar.YEAR) - yob;
         return "" + age;
     }
 
     // overloading getAge
+    /**
+     * @return - the age of the Person based on a given year ("how old is this person in 2000?")
+     */
     public String getAge(int year) {
         int age = year - yob;
         return "" + age;
@@ -115,7 +157,7 @@ public class Person {
                 '}';
     }
 
-    @Override
+    /*@Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
@@ -125,5 +167,5 @@ public class Person {
     @Override
     public int hashCode() {
         return Objects.hash(id, firstName, lastName, title, yob);
-    }
+    }*/
 }

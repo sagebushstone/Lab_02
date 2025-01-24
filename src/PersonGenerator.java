@@ -9,8 +9,7 @@ import static java.nio.file.StandardOpenOption.CREATE;
 
 public class PersonGenerator {
     public static void main(String[] args){
-        Scanner in = new Scanner(System.in);
-        SafeInputObj sio = new SafeInputObj(in);
+        SafeInputObj sio = new SafeInputObj();
 
         // ArrayList of type Person to hold the objects
         ArrayList<Person> userList = new ArrayList<>();
@@ -27,7 +26,7 @@ public class PersonGenerator {
             pers.setFirstName(sio.getNonZeroLenString("Enter the First Name"));
             pers.setLastName(sio.getNonZeroLenString("Enter the Last Name"));
             pers.setTitle(sio.getNonZeroLenString("Enter the Title"));
-            pers.setYob(sio.getRangedInt("Enter the Year of Birth", 1000, 9999));
+            pers.setYob(sio.getRangedInt("Enter the Year of Birth", 1940, 2010));
             moreUsers = sio.getYNConfirm( "Do you wish to enter another user?");
 
             userList.add(pers);

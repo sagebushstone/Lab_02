@@ -9,8 +9,7 @@ import static java.nio.file.StandardOpenOption.CREATE;
 
 public class ProductWriter {
     public static void main(String[] args){
-        Scanner in = new Scanner(System.in);
-        SafeInputObj sio = new SafeInputObj(in);
+        SafeInputObj sio = new SafeInputObj();
 
         ArrayList<Product> productList = new ArrayList<>();
         boolean moreProducts = true;
