@@ -9,28 +9,27 @@ import static java.nio.file.StandardOpenOption.CREATE;
 
 public class ProductWriter {
     public static void main(String[] args){
-        String userId = "";
-        String name = "";
-        String description = "";
-        double cost = 0;
-        ArrayList<String> productList = new ArrayList<>();
         Scanner in = new Scanner(System.in);
+        SafeInputObj sio = new SafeInputObj(in);
+
+        ArrayList<Product> productList = new ArrayList<>();
         boolean moreProducts = true;
 
         File workingDirectory = new File(System.getProperty("user.dir"));
-        Path file = Paths.get(workingDirectory.getPath() + "\\src\\ProductTestData.txt");
+        Path file = Paths.get(workingDirectory.getPath() + "\\src\\ProductTestData.csv");
+        Path fileJSON = Paths.get(workingDirectory.getPath() + "\\src\\ProductTestData.json");
+        Path fileXML = Paths.get(workingDirectory.getPath() + "\\src\\ProductTestData.xml");
+
 
         do {
-            userId = SafeInput.getNonZeroLenString(in, "Enter the Product ID");
-            name = SafeInput.getNonZeroLenString(in, "Enter the Product Name");
-            description = SafeInput.getNonZeroLenString(in, "Enter the Description");
-            cost = SafeInput.getRangedDouble(in, "Enter the Cost", 0, 99999);
-            moreProducts = SafeInput.getYNConfirm(in, "Do you wish to enter another product?");
+            Product prod = new Product();
+            prod.setID(sio.getNonZeroLenString("Enter the Product ID"));
+            prod.setName(sio.getNonZeroLenString("Enter the Product Name"));
+            prod.setDescription(sio.getNonZeroLenString( "Enter the Description"));
+            prod.setCost(sio.getRangedDouble("Enter the Cost", 0, 99999));
+            moreProducts = sio.getYNConfirm("Do you wish to enter another product?");
 
-            String concatRecord = userId + ", " + name + ", " + description + ", " +
-                    cost;
-
-            productList.add(concatRecord);
+            productList.add(prod);
         } while (moreProducts);
 
         for(int i=0; i<productList.size(); i++){
@@ -40,23 +39,50 @@ public class ProductWriter {
         // copied from NIOWriteText
         try
         {
-            // Typical java pattern of inherited classes
-            // we wrap a BufferedWriter around a lower level BufferedOutputStream
-            OutputStream out =
+            OutputStream outCSV =
                     new BufferedOutputStream(Files.newOutputStream(file, CREATE));
-            BufferedWriter writer =
-                    new BufferedWriter(new OutputStreamWriter(out));
+            BufferedWriter writerCSV =
+                    new BufferedWriter(new OutputStreamWriter(outCSV));
 
-            // Finally can write the file LOL!
+            // creates objects for JSON
+            OutputStream outJSON =
+                    new BufferedOutputStream(Files.newOutputStream(fileJSON, CREATE));
+            BufferedWriter writerJSON =
+                    new BufferedWriter(new OutputStreamWriter(outJSON));
 
-            for(String rec : productList)
+            // creates objects for XML
+            OutputStream outXML =
+                    new BufferedOutputStream(Files.newOutputStream(fileXML, CREATE));
+            BufferedWriter writerXML =
+                    new BufferedWriter(new OutputStreamWriter(outXML));
+
+            writerJSON.write("{\"Product\":[");
+            writerXML.write("<Products>");
+            for(Product rec : productList)
             {
-                writer.write(rec, 0, rec.length());  // stupid syntax for write rec
-                // 0 is where to start (1st char) the write
-                // rec. length() is how many chars to write (all)
-                writer.newLine();  // adds the new line
+                writerCSV.write(rec.toCSV());
+                writerCSV.newLine();
+
+                writerJSON.write(rec.toJSON());
+                if(!rec.equals(productList.get(productList.size()-1))){
+                    writerJSON.write(",");
+                }
+                else{
+                    writerJSON.write("]}");
+                }
+                writerJSON.newLine();
+
+                // writes the XML file
+                writerXML.write(rec.toXML());
+                if(rec.equals(productList.get(productList.size()-1))){
+                    writerXML.write("</Products>");
+                }
+                writerXML.newLine();
             }
-            writer.close(); // must close the file to seal it and flush buffer
+            writerCSV.close();
+            writerJSON.close();
+            writerXML.close();
+
             System.out.println("Data file written!");
         }
         catch (IOException e)

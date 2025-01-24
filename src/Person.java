@@ -1,3 +1,4 @@
+import java.util.Calendar;
 import java.util.Objects;
 
 public class Person {
@@ -7,6 +8,10 @@ public class Person {
     private String title = "";
     private int yob = 0;
 
+    // empty constructor to create an uninitialized Person
+    public Person(){
+
+    }
     public Person(String id, String firstName, String lastName, String title, int yob) {
         this.id = id;
         this.firstName = firstName;
@@ -53,6 +58,50 @@ public class Person {
 
     public void setYob(int yob) {
         this.yob = yob;
+    }
+
+    public String getFullName(){
+        return firstName + " " + lastName;
+    }
+
+    public String formalName(){
+        return title + " " + getFullName();
+    }
+
+    public String toCSV(){
+        return id + ", " + firstName + ", " + lastName + ", " + title + ", " + yob;
+    }
+
+    public String toJSON(){
+        String Q = "\"";
+        String QCM = "\", ";
+        String QC = "\": \"";
+        return "{" + Q + "ID" + QC + id + QCM
+                + Q + "firstName" + QC +  firstName + QCM
+                + Q + "lastName" + QC + lastName + QCM
+                + Q + "title" + QC + title + QCM
+                + Q + "yob" + Q + ": " + yob  + "}";
+    }
+
+    public String toXML(){
+        return "<Person>" +
+                "<ID>" + id + "</ID>" +
+                "<firstName>" + firstName + "</firstName>" +
+                "<lastName>" + lastName + "</lastName>" +
+                "<title>" + title + "</title>" +
+                "<yob>" + yob + "</yob>" + "</Person>";
+    }
+
+
+    public String getAge() {
+        int age = Calendar.getInstance().get(Calendar.YEAR) - yob;
+        return "" + age;
+    }
+
+    // overloading getAge
+    public String getAge(int year) {
+        int age = year - yob;
+        return "" + age;
     }
 
     @Override

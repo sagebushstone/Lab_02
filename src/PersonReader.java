@@ -78,12 +78,14 @@ public class PersonReader {
 
                     if(fields.length == FIELDS_LENGTH)
                     {
-                        id        = fields[0].trim();
-                        firstName = fields[1].trim();
-                        lastName  = fields[2].trim();
-                        title     = fields[3].trim();
-                        yob       = Integer.parseInt(fields[4].trim());
-                        System.out.printf("\n%-8s%-25s%-25s%-6s%6d", id, firstName, lastName, title, yob);
+                        Person pers = new Person();
+                        pers.setId(fields[0].trim());
+                        pers.setFirstName(fields[1].trim());
+                        pers.setLastName(fields[2].trim());
+                        pers.setTitle(fields[3].trim());
+                        pers.setYob(Integer.parseInt(fields[4].trim()));
+
+                        System.out.printf("\n%-8s%-25s%-25s%-6s%6d", pers.getId(), pers.getFirstName(), pers.getLastName(), pers.getTitle(), pers.getYob());
                     }
                     else
                     {

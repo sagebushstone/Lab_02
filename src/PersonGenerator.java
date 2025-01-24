@@ -9,33 +9,28 @@ import static java.nio.file.StandardOpenOption.CREATE;
 
 public class PersonGenerator {
     public static void main(String[] args){
-        Person boy = new Person("000001", "Bill", "Bailey", "Dr.", 2000);
-        System.out.println(boy.toString());
-    }
-        /*String userId = "";
-        String firstName = "";
-        String lastName = "";
-        String title = "";
-        int birthYear = 0;
-        ArrayList<String> userList = new ArrayList<>();
         Scanner in = new Scanner(System.in);
+        SafeInputObj sio = new SafeInputObj(in);
+
+        // ArrayList of type Person to hold the objects
+        ArrayList<Person> userList = new ArrayList<>();
         boolean moreUsers = true;
 
         File workingDirectory = new File(System.getProperty("user.dir"));
-        Path file = Paths.get(workingDirectory.getPath() + "\\src\\PersonTestData.txt");
+        Path file = Paths.get(workingDirectory.getPath() + "\\src\\PersonTestData.csv");
+        Path fileJSON = Paths.get(workingDirectory.getPath() + "\\src\\PersonTestData.json");
+        Path fileXML = Paths.get(workingDirectory.getPath() + "\\src\\PersonTestData.xml");
 
         do {
-            userId = SafeInput.getNonZeroLenString(in, "Enter the User ID");
-            firstName = SafeInput.getNonZeroLenString(in, "Enter the First Name");
-            lastName = SafeInput.getNonZeroLenString(in, "Enter the Last Name");
-            title = SafeInput.getNonZeroLenString(in, "Enter the Title");
-            birthYear = SafeInput.getRangedInt(in, "Enter the Year of Birth", 1000, 9999);
-            moreUsers = SafeInput.getYNConfirm(in, "Do you wish to enter another user?");
+            Person pers = new Person();
+            pers.setId(sio.getNonZeroLenString("Enter the User ID"));
+            pers.setFirstName(sio.getNonZeroLenString("Enter the First Name"));
+            pers.setLastName(sio.getNonZeroLenString("Enter the Last Name"));
+            pers.setTitle(sio.getNonZeroLenString("Enter the Title"));
+            pers.setYob(sio.getRangedInt("Enter the Year of Birth", 1000, 9999));
+            moreUsers = sio.getYNConfirm( "Do you wish to enter another user?");
 
-            String concatRecord = userId + ", " + firstName + ", " + lastName + ", " +
-                    title + ", " + birthYear;
-
-            userList.add(concatRecord);
+            userList.add(pers);
         } while (moreUsers);
 
         for(int i=0; i<userList.size(); i++){
@@ -45,23 +40,51 @@ public class PersonGenerator {
         // copied from NIOWriteText
         try
         {
-            // Typical java pattern of inherited classes
-            // we wrap a BufferedWriter around a lower level BufferedOutputStream
             OutputStream out =
                     new BufferedOutputStream(Files.newOutputStream(file, CREATE));
             BufferedWriter writer =
                     new BufferedWriter(new OutputStreamWriter(out));
 
-            // Finally can write the file LOL!
+            // creates objects for JSON
+            OutputStream outJSON =
+                    new BufferedOutputStream(Files.newOutputStream(fileJSON, CREATE));
+            BufferedWriter writerJSON =
+                    new BufferedWriter(new OutputStreamWriter(outJSON));
 
-            for(String rec : userList)
+            // creates objects for XML
+            OutputStream outXML =
+                    new BufferedOutputStream(Files.newOutputStream(fileXML, CREATE));
+            BufferedWriter writerXML =
+                    new BufferedWriter(new OutputStreamWriter(outXML));
+
+            writerJSON.write("{\"Person\":[");
+            writerXML.write("<Persons>");
+            for(Person rec : userList)
             {
-                writer.write(rec, 0, rec.length());  // stupid syntax for write rec
-                // 0 is where to start (1st char) the write
-                // rec. length() is how many chars to write (all)
-                writer.newLine();  // adds the new line
+                // writes the line in CSV format
+                writer.write(rec.toCSV());
+                writer.newLine();
+
+                // writes the line in JSON file
+                writerJSON.write(rec.toJSON());
+                if(!rec.equals(userList.get(userList.size()-1))){
+                    writerJSON.write(",");
+                }
+                else{
+                    writerJSON.write("]}");
+                }
+                writerJSON.newLine();
+
+                // writes the XML file
+                writerXML.write(rec.toXML());
+                if(rec.equals(userList.get(userList.size()-1))){
+                    writerXML.write("</Persons>");
+                }
+                writerXML.newLine();
             }
-            writer.close(); // must close the file to seal it and flush buffer
+            writer.close();
+            writerJSON.close();
+            writerXML.close();
             System.out.println("Data file written!");
         }
         catch (IOException e)
@@ -69,6 +92,6 @@ public class PersonGenerator {
             e.printStackTrace();
         }
 
-    }*/
+    }
 }
 
